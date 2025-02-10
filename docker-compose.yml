@@ -1,0 +1,17 @@
+services:
+  backend:
+    build: ./rotaflow-backend
+    image: rotaflow-backend:latest # 👈 assign explicit image name
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./rotaflow-backend/.env # DATABASE_URL for Neon
+
+  frontend:
+    build: ./rotaflow-frontend
+    image: rotaflow-frontend:latest # 👈 assign explicit image name
+    container_name: rotaflow-frontend
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
