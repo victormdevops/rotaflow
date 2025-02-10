@@ -1,104 +1,117 @@
-📅 Rotaflow – Workforce Scheduling Platform
+Understood — you want it in **pure Markdown syntax using `#`, `##`, `-`, etc.** (no emojis or fancy bullets), so that when you paste it into GitHub it renders cleanly and professionally.
 
-Rotaflow is a web platform that allows managers in an organization to schedule workers and assign them roles.
-This project is built with the MERN stack and fully containerized & automated using modern DevOps practices.
+Here is the same README **in clean GitHub-friendly Markdown**:
 
-🚀 Features
+````markdown
+# Rotaflow – Workforce Scheduling Platform (DevOps Case Study)
 
-👥 User Management – manage employees and roles
+Rotaflow is a containerized MERN-based workforce scheduling platform.  
+The primary goal of this project is to showcase modern DevOps practices including automation, observability, and deployment readiness.
 
-📅 Shift Scheduling – assign workers to shifts with roles
+---
 
-🔒 Role-based Access Control
+## Project Overview
 
-📊 API Documentation – Swagger UI
+This application includes basic workforce scheduling functionality (user and role management, shift assignments, RBAC, and API documentation via Swagger).  
+However, the emphasis of this project is on DevOps engineering:
 
-🛠️ DevOps Stack
-Area Tools & Practices
-Containerization Docker + Docker Compose
-CI/CD GitHub Actions (Build → Test → Deploy)
-Secrets Management GitHub Secrets (DATABASE_URL, etc)
-Infrastructure as Code docker-compose.yml, deploy.yml
-Monitoring & Logging Healthchecks, Logs as CI Artifacts (Prometheus/Grafana/Loki planned)
-Scalability Ready Stateless services, environment-based configs
+- Infrastructure as Code
+- Multi-service containerization
+- Automated CI/CD pipelines
+- Secure secrets management
+- Health checks and logging
+- Scalability readiness
 
-📂 Project Structure
-rotaflow/
-├── rotaflow-backend/ # Express + Sequelize (API + DB)
-├── rotaflow-frontend/ # React + Nginx
-├── docker-compose.yml # Service orchestration
-├── deploy.yml # CI/CD pipeline (GitHub Actions)
-└── README.md # DevOps-focused documentation
+---
 
-⚡ Quick Start (Local Dev)
+## Architecture
 
-# Clone repository
+| Layer | Technology / Tool |
+|------|--------------------|
+| Frontend | React served through Nginx |
+| Backend | Node.js (Express) + Sequelize |
+| Database | PostgreSQL |
+| Container Orchestration | Docker + Docker Compose |
+| CI/CD | GitHub Actions |
+| Deployment | SSH (deploy.yml) |
+| Secrets | GitHub Secrets |
+| Observability | Health endpoints, CI log artifacts (Prometheus/Grafana/Loki planned) |
 
+---
+
+## Local Development
+
+```bash
 git clone https://github.com/your-username/rotaflow.git
 cd rotaflow
 
-# Create backend .env file
-
+# Minimal backend configuration
 echo "PORT=3000" > ./rotaflow-backend/.env
 echo "DATABASE_URL=postgres://user:pass@db:5432/rotaflow" >> ./rotaflow-backend/.env
 
-# Start all services
-
+# Launch full stack locally
 docker-compose up --build
+````
 
-🤖 CI/CD Workflow
+All services (frontend, backend, database) are defined as code in `docker-compose.yml`, enabling consistent and reproducible local environments.
 
-Every push to master triggers:
+---
 
-Build & Test
+## CI/CD Pipeline (GitHub Actions)
 
-Docker images are built for frontend & backend
+Every push to the `master` branch triggers the following automated sequence:
 
-Services launched in CI with docker-compose
+* **Build**: Docker images created for backend and frontend
+* **Test**: Containers started in CI, health checked (`/api/health` and `/`)
+* **Log Capture**: Container state and logs dumped
+* **Artifacts**: Logs uploaded as CI artifacts for debugging
+* **Deploy (optional)**: Via SSH using `deploy.yml`
 
-Health checks run for /api/health and /
+*Note:* Services are tested inside real containers during CI — not mocked — to simulate production behavior.
 
-Logging & Debugging
+---
 
-Container health/state dumped on every run
+## Monitoring and Observability
 
-Logs automatically uploaded as artifacts on failure
+| Capability                           | Status      |
+| ------------------------------------ | ----------- |
+| Healthcheck Endpoint (`/api/health`) | Implemented |
+| Container Health in CI               | Implemented |
+| Log Collection in CI                 | Implemented |
+| Prometheus + Grafana (metrics)       | Planned     |
+| Loki (centralized logging)           | Planned     |
 
-Deployment (optional)
+All logging and health checking is automated and integrated into the pipeline, ensuring fast feedback and easy debugging.
 
-Ready to deploy to VPS via SSH (deploy.yml)
+---
 
-🔍 Monitoring & Observability
+## Security and Secrets Management
 
-✅ Healthcheck endpoint (/api/health)
+* No hard-coded credentials
+* Secrets (such as `DATABASE_URL`) managed via GitHub Secrets
+* Docker images built following the least-privilege principle
 
-✅ Container health inspection in CI
+---
 
-✅ Logs collected & uploaded on failure
+## API Documentation
 
-🔜 Prometheus + Grafana for metrics
+Auto-generated Swagger UI available at `/api-docs` once the backend is running.
 
-🔜 Loki for centralized logging
+---
 
-📖 API Docs
-
-The backend includes auto-generated Swagger documentation.
-👉 Visit /api-docs once backend is running.
-
-💼 Why This Project Matters for DevOps
+## Why This Project Matters for DevOps
 
 This project demonstrates:
 
-CI/CD pipelines with GitHub Actions
+* Multi-service containerization with Docker and Docker Compose
+* Infrastructure as Code
+* Automated CI/CD with GitHub Actions
+* Secure secret injection
+* Health checking and automatic log collection
+* Deployment-ready stack that can be extended with full observability
 
-Secure secret injection (no credentials in code)
+---
 
-Dockerized frontend + backend with multi-service orchestration
+## Author
 
-Automated health checks + debugging logs
-
-Deployment-ready stack for interviews & portfolio
-
-🧑‍💻 Author
-
-👤 Victor Muthomi
+Victor Muthomi
