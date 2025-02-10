@@ -31,6 +31,10 @@ app.use(express.json());
 // Routes
 app.use("/api", routes);
 
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "ok" });
+});
+
 // Swagger
 require("./swagger/swagger")(app);
 
