@@ -21,16 +21,15 @@ However, the emphasis of this project is on DevOps engineering:
 
 ## Architecture
 
-| Layer | Technology / Tool |
-|------|--------------------|
-| Frontend | React served through Nginx |
-| Backend | Node.js (Express) + Sequelize |
-| Database | PostgreSQL |
-| Container Orchestration | Docker + Docker Compose |
-| CI/CD | GitHub Actions |
-| Deployment | SSH (deploy.yml) |
-| Secrets | GitHub Secrets |
-| Observability | Health endpoints, CI log artifacts (Prometheus/Grafana/Loki planned) |
+| Layer                   | Technology / Tool             |
+| ----------------------- | ----------------------------- |
+| Frontend                | React served through Nginx    |
+| Backend                 | Node.js (Express) + Sequelize |
+| Database                | PostgreSQL                    |
+| Container Orchestration | Docker + Docker Compose       |
+| CI/CD                   | GitHub Actions                |
+| Deployment              | SSH (deploy.yml)              |
+| Secrets                 | GitHub Secrets                |
 
 ---
 
@@ -46,7 +45,7 @@ echo "DATABASE_URL=postgres://user:pass@db:5432/rotaflow" >> ./rotaflow-backend/
 
 # Launch full stack locally
 docker-compose up --build
-````
+```
 
 All services (frontend, backend, database) are defined as code in `docker-compose.yml`, enabling consistent and reproducible local environments.
 
@@ -56,35 +55,51 @@ All services (frontend, backend, database) are defined as code in `docker-compos
 
 Every push to the `master` branch triggers the following automated sequence:
 
-* **Build**: Docker images created for backend and frontend
-* **Test**: Containers started in CI, health checked (`/api/health` and `/`)
-* **Log Capture**: Container state and logs dumped
-* **Artifacts**: Logs uploaded as CI artifacts for debugging
-* **Deploy (optional)**: Via SSH using `deploy.yml`
+- **Build**: Docker images created for backend and frontend
+- **Test**: Containers started in CI, health checked (`/api/health` and `/`)
+- **Log Capture**: Container state and logs dumped
+- **Artifacts**: Logs uploaded as CI artifacts for debugging
+- **Deploy (optional)**: Via SSH using `deploy.yml`
 
-*Note:* Services are tested inside real containers during CI — not mocked — to simulate production behavior.
-
----
-
-## Monitoring and Observability
-
-| Capability                           | Status      |
-| ------------------------------------ | ----------- |
-| Healthcheck Endpoint (`/api/health`) | Implemented |
-| Container Health in CI               | Implemented |
-| Log Collection in CI                 | Implemented |
-| Prometheus + Grafana (metrics)       | Planned     |
-| Loki (centralized logging)           | Planned     |
-
-All logging and health checking is automated and integrated into the pipeline, ensuring fast feedback and easy debugging.
+_Note:_ Services are tested inside real containers during CI — not mocked — to simulate production behavior.
 
 ---
+
+## Deployment Proof (Local VPS Simulation)
+
+### Docker Compose
+
+![docker ps](screenshots/docker-compose.png)
+
+### Docker Images
+
+![docker ps](screenshots/images.png)
+
+### Docker Ps
+
+![docker ps](screenshots/docker-ps.png)
+
+### Docker Logs
+
+![docker ps](screenshots/logs.png)
+
+### Frontend
+
+![frontend](screenshots/frontend.png)
+
+### Backend
+
+![backend](screenshots/backend.png)
+
+### GitHub Actions Build
+
+![github actions](screenshots/ci.png)
 
 ## Security and Secrets Management
 
-* No hard-coded credentials
-* Secrets (such as `DATABASE_URL`) managed via GitHub Secrets
-* Docker images built following the least-privilege principle
+- No hard-coded credentials
+- Secrets (such as `DATABASE_URL`) managed via GitHub Secrets
+- Docker images built following the least-privilege principle
 
 ---
 
@@ -98,12 +113,12 @@ Auto-generated Swagger UI available at `/api-docs` once the backend is running.
 
 This project demonstrates:
 
-* Multi-service containerization with Docker and Docker Compose
-* Infrastructure as Code
-* Automated CI/CD with GitHub Actions
-* Secure secret injection
-* Health checking and automatic log collection
-* Deployment-ready stack that can be extended with full observability
+- Multi-service containerization with Docker and Docker Compose
+- Infrastructure as Code
+- Automated CI/CD with GitHub Actions
+- Secure secret injection
+- Health checking and automatic log collection
+- Deployment-ready stack that can be extended with full observability
 
 ---
 
