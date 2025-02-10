@@ -22,6 +22,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
+      - name: Create backend .env from GitHub Secrets
+        run: |
+          echo "PORT=3000" > ./rotaflow-backend/.env
+          echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> ./rotaflow-backend/.env
+
       - name: Build Docker images
         run: |
           docker-compose build
