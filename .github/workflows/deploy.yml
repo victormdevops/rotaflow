@@ -28,26 +28,36 @@ jobs:
           echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> ./rotaflow-backend/.env
 
       - name: Build Docker images
-        run: |
-          docker-compose build
+        run: docker-compose build
 
       - name: Start services
-        run: |
-          docker-compose up -d
-          sleep 35 # give backend time to connect to NeonDB
+        run: docker-compose up -d
 
-      - name: Check backend health (inside container)
+      - name: Wait for backend to be ready
         run: |
-          docker-compose exec -T backend curl -f http://localhost:3000/api/health || exit 1
+          for i in {1..20}; do
+            if docker-compose exec -T backend curl -s http://localhost:3000/api/health; then
+              echo "✅ Backend is up!"
+              exit 0
+            fi
+            echo "⏳ Waiting for backend... ($i/20)"
+            sleep 3
+          done
+          echo "❌ Backend failed to start in time"
+          exit 1
 
-      - name: Check frontend health (inside container)
+      - name: Wait for frontend to be ready
         run: |
-          docker-compose exec -T frontend curl -f http://localhost:80 || exit 1
+          for i in {1..20}; do
+            if docker-compose exec -T frontend curl -s http://localhost:80; then
+              echo "✅ Frontend is up!"
+              exit 0
+            fi
+            echo "⏳ Waiting for frontend... ($i/20)"
+            sleep 3
+          done
+          echo "❌ Frontend failed to start in time"
+          exit 1
 
       - name: Stop services
         run: docker-compose down
-
-      # ---- Deployment (disabled for now) ----
-      # - name: Deploy to VPS
-      #   run: |
-      #     ssh user@your-vps-ip "cd /path/to/app && git pull && docker-compose up -d --build"
