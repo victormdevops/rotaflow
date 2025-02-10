@@ -1,8 +1,3 @@
-Understood — you want it in **pure Markdown syntax using `#`, `##`, `-`, etc.** (no emojis or fancy bullets), so that when you paste it into GitHub it renders cleanly and professionally.
-
-Here is the same README **in clean GitHub-friendly Markdown**:
-
-````markdown
 # Rotaflow – Workforce Scheduling Platform (DevOps Case Study)
 
 Rotaflow is a containerized MERN-based workforce scheduling platform.  
