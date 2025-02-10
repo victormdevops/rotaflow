@@ -44,6 +44,7 @@ jobs:
             sleep 3
           done
           echo "❌ Backend failed to start in time"
+          docker-compose logs backend
           exit 1
 
       - name: Wait for frontend to be ready
@@ -57,7 +58,22 @@ jobs:
             sleep 3
           done
           echo "❌ Frontend failed to start in time"
+          docker-compose logs frontend
           exit 1
 
       - name: Stop services
         run: docker-compose down
+
+      # ---- Deployment to VPS (optional, enable when ready) ----
+      # - name: Deploy to VPS
+      #   env:
+      #     SSH_KEY: ${{ secrets.SSH_KEY }}
+      #   run: |
+      #     echo "$SSH_KEY" > private_key.pem
+      #     chmod 600 private_key.pem
+      #     ssh -o StrictHostKeyChecking=no -i private_key.pem user@your-vps-ip "
+      #       cd /path/to/app &&
+      #       git pull &&
+      #       docker-compose down &&
+      #       docker-compose up -d --build
+      #     "
