@@ -34,15 +34,15 @@ jobs:
       - name: Start services
         run: |
           docker-compose up -d
-          sleep 10 # wait for containers to be ready
+          sleep 20 # give backend time to connect to NeonDB
 
-      - name: Check backend health
+      - name: Check backend health (inside container)
         run: |
-          curl -f http://localhost:3000/api/health || exit 1
+          docker-compose exec -T backend curl -f http://localhost:3000/api/health || exit 1
 
-      - name: Check frontend health
+      - name: Check frontend health (inside container)
         run: |
-          curl -f http://localhost:8080 || exit 1
+          docker-compose exec -T frontend curl -f http://localhost:80 || exit 1
 
       - name: Stop services
         run: docker-compose down
