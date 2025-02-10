@@ -34,7 +34,7 @@ jobs:
       - name: Start services
         run: |
           docker-compose up -d
-          sleep 20 # give backend time to connect to NeonDB
+          sleep 35 # give backend time to connect to NeonDB
 
       - name: Check backend health (inside container)
         run: |
