@@ -29,3 +29,6 @@ HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
 USER nodeusr
 CMD ["node", "src/server.js"]
 
+HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
+  CMD wget -qO- http://localhost:3000/api/health || exit 1
+
